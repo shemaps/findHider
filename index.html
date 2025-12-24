@@ -2,10 +2,53 @@
 <html>
 <head>
     <title>QR Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
-        .hidden { display: none; }
+<style>
+        body { 
+            /* Black background and Green Quantico font */
+            background-color: #000000;
+            color: #00FF00; 
+            font-family: 'Quantico', sans-serif; 
+            
+            text-align: center; 
+            padding: 20px; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            text-transform: uppercase; /* Makes it look more like a terminal */
+            letter-spacing: 2px;
+        }
+
+        h1 { 
+            font-size: 3rem; 
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00FF00;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        p { 
+            font-size: 1.2rem; 
+            line-height: 1.6;
+        }
+
+        /* Scan line effect (Optional, adds to the vibe) */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -36,6 +79,7 @@
 </body>
 
 </html>
+
 
 
 
