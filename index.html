@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QR Game</title>
+    <title>QR Scanner Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
         body { 
-            /* Black background and Green Quantico font */
             background-color: #000000;
             color: #00FF00; 
             font-family: 'Quantico', sans-serif; 
-            
             text-align: center; 
             padding: 20px; 
             margin: 0;
@@ -20,8 +20,10 @@
             flex-direction: column;
             justify-content: center;
             height: 100vh;
-            text-transform: uppercase; /* Makes it look more like a terminal */
+            text-transform: uppercase;
             letter-spacing: 2px;
+            /* Text Glow Effect */
+            text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00;
         }
 
         h1 { 
@@ -32,21 +34,17 @@
             padding-bottom: 10px;
         }
 
-        p { 
-            font-size: 1.2rem; 
-            line-height: 1.6;
-        }
+        p { font-size: 1.2rem; line-height: 1.6; }
 
-        /* Scan line effect (Optional, adds to the vibe) */
+        /* CRT Scanline Effect */
         body::before {
             content: " ";
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
             z-index: 2;
-            background-size: 100% 2px, 3px 100%;
+            background-size: 100% 4px;
             pointer-events: none;
         }
     </style>
@@ -56,28 +54,32 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const codeId = urlParams.get('id'); // Get the number from the QR code URL
-        const hasPlayed = localStorage.getItem('hasPlayed');
-
+        const codeId = urlParams.get('id');
+        const winningId = '1'; // <--- Change your winning number here
+        
+        const hasPlayed = localStorage.getItem('qr_game_played');
         const statusDiv = document.getElementById('status');
 
-        if (hasPlayed) {
-            statusDiv.innerHTML = "<h1>Mission incomplete. </h1><p>You only had one guess. Your mission has run out of resources and misidentifying The Hider presents a security risk. If you would like to proceed, contact mission control. </p>";
-        } else if (!codeId) {
-            statusDiv.innerHTML = "<h1>Error</h1><p>Invalid QR Code.</p>";
-        } else {
-            // Mark as played immediately
-            localStorage.setItem('hasPlayed', 'true');
-
-            if (codeId === '1') { // Change '7' to whichever number you want to be the winner
-                statusDiv.innerHTML = "<h1> YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p> He gives you the location of the vault: 30 degrees magnetic, 14 m from X </p>";
-            } else {
-                statusDiv.innerHTML = "<h1>Better luck next time!</h1><p>That was not the winning code.</p>";
-            }
+        // LOGIC:
+        // 1. If they scan the WINNER, always show the win screen (even if they've played before).
+        if (codeId === winningId) {
+            statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>You are given the location of the vault: x meters, 30 degrees magnetic </p>";
+        } 
+        // 2. If they have already scanned a LOSER previously, they are out of guesses.
+        else if (hasPlayed === 'true') {
+            statusDiv.innerHTML = "<h1>ACCESS DENIED. MISSION INCOMPLETE.</h1><p>ERROR: OUT OF GUESSES.<br>Your mission has run out of resources and misidentifying The Hider presents a security risk. SYSTEM LOCKED. If you would like to proceed, contact mission control.</p>";
+        } 
+        // 3. If this is their first time scanning and it's a LOSER:
+        else if (codeId && codeId !== winningId) {
+            localStorage.setItem('qr_game_played', 'true'); // Mark them as having used their one shot
+            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>RESULT: NO MATCH FOUND. <br> You have misidentified the hider. <br>CHANCES EXHAUSTED.</p>";
+        } 
+        // 4. Default state if no ID is found
+        else {
+            statusDiv.innerHTML = "<h1>SYSTEM READY</h1><p>WAITING FOR SCAN...</p>";
         }
     </script>
 </body>
-
 </html>
 
 
