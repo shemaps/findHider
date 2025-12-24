@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="status"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const codeId = urlParams.get('id'); // Get the number from the QR code URL
+        const hasPlayed = localStorage.getItem('hasPlayed');
+
+        const statusDiv = document.getElementById('status');
+
+        if (hasPlayed) {
+            statusDiv.innerHTML = "<h1>Sorry!</h1><p>You are out of guesses. You only get one scan!</p>";
+        } else if (!codeId) {
+            statusDiv.innerHTML = "<h1>Error</h1><p>Invalid QR Code.</p>";
+        } else {
+            // Mark as played immediately
+            localStorage.setItem('hasPlayed', 'true');
+
+            if (codeId === '7') { // Change '7' to whichever number you want to be the winner
+                statusDiv.innerHTML = "<h1>🎉 YOU WON! 🎉</h1><p>Show this screen to the host.</p>";
+            } else {
+                statusDiv.innerHTML = "<h1>Better luck next time!</h1><p>That was not the winning code.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
