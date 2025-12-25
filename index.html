@@ -52,37 +52,41 @@
 <body>
     <div id="status"></div>
 
-    <script>
+<script>
         const urlParams = new URLSearchParams(window.location.search);
         const codeId = urlParams.get('id');
-        const winningId = '1'; // <--- Change your winning number here
+        const winningId = '1'; // <--- Your winning ID
         
         const hasPlayed = localStorage.getItem('qr_game_played');
         const statusDiv = document.getElementById('status');
 
-        // LOGIC:
-        // 2. If they have already scanned, they are out of guesses.
+        // 1. Check if they have already used their one attempt
         if (hasPlayed === 'true') {
-            statusDiv.innerHTML = "<h1>ACCESS DENIED.</h1><p> Additional attempt detected.<br> SECURITY LOCKDOWN ENGAGED. If you would like to proceed, contact intelligence specialist.</p>";
+            document.body.style.color = "#FF0000"; // Optional: Turn screen red for denied access
+            document.body.style.textShadow = "0 0 10px #FF0000";
+            statusDiv.innerHTML = "<h1>ACCESS DENIED.</h1><p>Additional attempt detected.<br>SECURITY LOCKDOWN ENGAGED.<br>Contact intelligence specialist.</p>";
         } 
-            
-        // 1. If they scan the WINNER, always show the win screen (even if they've played before).
-       else if (codeId === winningId) {
-            statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>Vault location: x meters, 30 degrees magnetic </p>";
+        
+        // 2. If first time scanning AND they found the winner
+        else if (codeId === winningId) {
+            localStorage.setItem('qr_game_played', 'true'); // LOCK THE DOOR IMMEDIATELY
+            statusDiv.innerHTML = "<h1>IDENTITY CONFIRMED</h1><p>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.<br>Vault location: x meters, 30 degrees magnetic</p>";
         } 
 
-        // 3. If this is their first time scanning and it's a LOSER:
+        // 3. If first time scanning AND they found a loser
         else if (codeId && codeId !== winningId) {
-            localStorage.setItem('qr_game_played', 'true'); // Mark them as having used their one shot
-            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>NO MATCH FOUND. <br> You have misidentified the hider. <br> Additional attempts PROHIBITED.</p>";
+            localStorage.setItem('qr_game_played', 'true'); // LOCK THE DOOR IMMEDIATELY
+            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>NO MATCH FOUND.<br>You have misidentified the hider.<br>ONE ATTEMPT PROTOCOL: ACCESS PROHIBITED.</p>";
         } 
-        // 4. Default state if no ID is found
+
+        // 4. No QR code scanned yet
         else {
-            statusDiv.innerHTML = "<h1>SYSTEM READY</h1><p>WAITING FOR SCAN...</p>";
+            statusDiv.innerHTML = "<h1>SYSTEM READY</h1><p>WAITING FOR SCAN...<br>CHOOSE CAREFULLY.</p>";
         }
     </script>
 </body>
 </html>
+
 
 
 
