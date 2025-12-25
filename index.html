@@ -70,7 +70,7 @@
         // 2. If first time scanning AND they found the winner
         else if (codeId === winningId) {
             localStorage.setItem('qr_game_played', 'true'); // LOCK THE DOOR IMMEDIATELY
-            statusDiv.innerHTML = "<h1>IDENTITY CONFIRMED</h1><p>YOU HAVE CORRECTLY IDENTIFIED THE HIDER. <br> Vault location: x meters, 30 degrees magnetic <br> For security, you will be locked out of the system. Write this location down. </p>";
+            statusDiv.innerHTML = "<h1>IDENTITY CONFIRMED</h1><p>YOU HAVE CORRECTLY IDENTIFIED THE HIDER. <br> Vault location: x meters, 30 degrees magnetic <br></p><p> For security, you will be locked out of the system. Remember this location. </p>";
         } 
 
         // 3. If first time scanning AND they found a loser
@@ -86,6 +86,7 @@
     </script>
 </body>
 </html>
+
 
 
 
