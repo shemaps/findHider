@@ -61,14 +61,15 @@
         const statusDiv = document.getElementById('status');
 
         // LOGIC:
-        // 1. If they scan the WINNER, always show the win screen (even if they've played before).
-        if (codeId === winningId) {
-            statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>Vault location: x meters, 30 degrees magnetic </p>";
-        } 
         // 2. If they have already scanned a LOSER previously, they are out of guesses.
         else if (hasPlayed === 'true') {
             statusDiv.innerHTML = "<h1>ACCESS DENIED.</h1><p> Additional attempt detected.<br> SECURITY LOCKDOWN ENGAGED. If you would like to proceed, contact intelligence specialist.</p>";
         } 
+        // 1. If they scan the WINNER, always show the win screen (even if they've played before).
+        if (codeId === winningId) {
+            statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>Vault location: x meters, 30 degrees magnetic </p>";
+        } 
+
         // 3. If this is their first time scanning and it's a LOSER:
         else if (codeId && codeId !== winningId) {
             localStorage.setItem('qr_game_played', 'true'); // Mark them as having used their one shot
@@ -81,6 +82,7 @@
     </script>
 </body>
 </html>
+
 
 
 
