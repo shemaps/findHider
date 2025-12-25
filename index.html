@@ -62,11 +62,11 @@
 
         // LOGIC:
         // 2. If they have already scanned a LOSER previously, they are out of guesses.
-        else if (hasPlayed === 'true') {
+        if (hasPlayed === 'true') {
             statusDiv.innerHTML = "<h1>ACCESS DENIED.</h1><p> Additional attempt detected.<br> SECURITY LOCKDOWN ENGAGED. If you would like to proceed, contact intelligence specialist.</p>";
         } 
         // 1. If they scan the WINNER, always show the win screen (even if they've played before).
-        if (codeId === winningId) {
+       else if (codeId === winningId) {
             statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>Vault location: x meters, 30 degrees magnetic </p>";
         } 
 
@@ -82,6 +82,7 @@
     </script>
 </body>
 </html>
+
 
 
 
