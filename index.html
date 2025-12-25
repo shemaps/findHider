@@ -76,7 +76,7 @@
         // 3. If first time scanning AND they found a loser
         else if (codeId && codeId !== winningId) {
             localStorage.setItem('qr_game_played', 'true'); // LOCK THE DOOR IMMEDIATELY
-            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>NO MATCH FOUND.<br>You have misidentified the hider.<br>ONE ATTEMPT PROTOCOL: ACCESS PROHIBITED.</p>";
+            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>NO MATCH FOUND.<br>You have misidentified the hider.<br> Additional attempts prohibited.</p>";
         } 
 
         // 4. No QR code scanned yet
@@ -86,6 +86,7 @@
     </script>
 </body>
 </html>
+
 
 
 
