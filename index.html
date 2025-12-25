@@ -63,16 +63,16 @@
         // LOGIC:
         // 1. If they scan the WINNER, always show the win screen (even if they've played before).
         if (codeId === winningId) {
-            statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>You are given the location of the vault: x meters, 30 degrees magnetic </p>";
+            statusDiv.innerHTML = "<h1>YOU HAVE CORRECTLY IDENTIFIED THE HIDER.</h1><p>Vault location: x meters, 30 degrees magnetic </p>";
         } 
         // 2. If they have already scanned a LOSER previously, they are out of guesses.
         else if (hasPlayed === 'true') {
-            statusDiv.innerHTML = "<h1>ACCESS DENIED. MISSION INCOMPLETE.</h1><p>ERROR: OUT OF GUESSES.<br>Your mission has run out of resources and misidentifying The Hider presents a security risk. SYSTEM LOCKED. If you would like to proceed, contact mission control.</p>";
+            statusDiv.innerHTML = "<h1>ACCESS DENIED.</h1><p> Additional attempt detected.<br> SECURITY LOCKDOWN ENGAGED. If you would like to proceed, contact intelligence specialist.</p>";
         } 
         // 3. If this is their first time scanning and it's a LOSER:
         else if (codeId && codeId !== winningId) {
             localStorage.setItem('qr_game_played', 'true'); // Mark them as having used their one shot
-            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>RESULT: NO MATCH FOUND. <br> You have misidentified the hider. <br>CHANCES EXHAUSTED.</p>";
+            statusDiv.innerHTML = "<h1>SCAN COMPLETE</h1><p>NO MATCH FOUND. <br> You have misidentified the hider. <br> Additional attempts PROHIBITED.</p>";
         } 
         // 4. Default state if no ID is found
         else {
@@ -81,6 +81,7 @@
     </script>
 </body>
 </html>
+
 
 
 
